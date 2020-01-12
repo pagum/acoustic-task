@@ -1,13 +1,20 @@
 import React from "react";
 import moment from "moment";
 
-const DateComponent = (componentProps: any) => {
-  const formattedDate = moment(componentProps.date).format("MM-DD-YYYY  HH:mm");
+import { ComponentWrapper } from "./ItemComponents.style";
+
+interface DateProps {
+  label: string;
+  date: string;
+}
+
+const DateComponent = ({ label, date }: DateProps) => {
+  const formattedDate = moment(date).format("MM-DD-YYYY  HH:mm");
   return (
-    <div>
-      {componentProps.label}
+    <ComponentWrapper>
+      {label}
       {formattedDate}
-    </div>
+    </ComponentWrapper>
   );
 };
 

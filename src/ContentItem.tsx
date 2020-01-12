@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import * as R from "ramda";
-import { articleType } from "./data";
+
 import { prepareElement } from "./contentItem.helpers";
+import { ContentType } from "./content.type";
 
 interface ContentItemProps {
-  item: any;
+  item: ContentType;
 }
 
 const ContentItem = ({ item }: ContentItemProps) => {
+  console.log(item);
   const elementsKeys = R.keys(item.elements);
   const elementsValues = R.values(item.elements);
-  console.log("vaaaal", item, elementsValues);
   const itemElements = elementsKeys.map((key, index) => ({
     key,
     ...elementsValues[index]
   }));
   console.log(itemElements);
-  const x = prepareElement({ itemElements });
-  console.log(x);
-  return <div data-key="arrrrr">{x}</div>;
+  const element = prepareElement({ itemElements });
+
+  return <div>{element}</div>;
 };
 export default ContentItem;

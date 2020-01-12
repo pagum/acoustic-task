@@ -1,16 +1,24 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
+import { ComponentWrapper } from "./ItemComponents.style";
 
-const Input = (inputProps: any) => (
-  <div>
-    {inputProps.label}
+interface InputProps {
+  label: string;
+  text: string;
+  value: string;
+}
+
+const Input = ({ label, text, value }: InputProps) => (
+  <ComponentWrapper>
+    {label}
     <TextField
       type="text"
-      placeholder={inputProps.text}
-      value={inputProps.value}
-      disabled={!!inputProps.value}
+      placeholder={text}
+      value={value}
+      disabled={!!value}
       multiline
     />
-  </div>
+  </ComponentWrapper>
 );
+
 export default Input;

@@ -1,14 +1,20 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
 import ReactHtmlParser from "react-html-parser";
+import { ComponentWrapper } from "./ItemComponents.style";
 
-const FormattedTextComponent = (componentProps: any) => (
-  <div>
-    {componentProps.label}
-    {componentProps.values.map((x: any) => (
-      <div>{ReactHtmlParser(x)}</div>
+interface FormattedTextProps {
+  label: string;
+  text: string;
+  values: string[];
+}
+
+const FormattedTextComponent = ({ values, label }: FormattedTextProps) => (
+  <ComponentWrapper>
+    {label}
+    {values.map((value: string, index: number) => (
+      <div key={index}>{ReactHtmlParser(value)}</div>
     ))}
-  </div>
+  </ComponentWrapper>
 );
 
 export default FormattedTextComponent;

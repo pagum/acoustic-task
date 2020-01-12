@@ -6,8 +6,21 @@ import Input from "./ItemComponents/Input";
 import FormattedTextComponent from "./ItemComponents/FormattedTextComponent";
 import DateComponent from "./ItemComponents/DateComponent";
 import Image from "./ItemComponents/Image";
+import ItemComponent, {
+  ItemComponentProps
+} from "./ItemComponents/ItemComponent";
+import { ImageValue } from "./content.type";
+
+interface ItemElement {
+  elementType: string;
+  key: string | number;
+  value?: string | ImageValue;
+  values?: string[];
+  typeRef?: { id: string };
+}
+
 interface PrepareElementInterface {
-  itemElements: any;
+  itemElements: ItemElement[];
 }
 
 enum ElementType {
@@ -19,21 +32,18 @@ enum ElementType {
 
 export const prepareElement = ({ itemElements }: PrepareElementInterface) => {
   const { elements: articleElements } = articleType;
-  console.log(itemElements);
-  const x =
+  const preparedElement =
     itemElements &&
-    itemElements.map((element: any) => {
+    itemElements.map((element: ItemElement) => {
       const articleElement = R.find(
         R.propEq("elementType", element.elementType)
       )(articleElements);
-      // console.log(element.key, element.value, element.values, articleElement);
       const {
         value: elementValue,
         key: elementKey,
         elementType,
         values: elementValues
       } = element;
-      console.log("x ", element);
 
       return ItemComponent({
         ...articleElement,
@@ -43,86 +53,11 @@ export const prepareElement = ({ itemElements }: PrepareElementInterface) => {
         elementValues
       });
     });
-  return x;
-};
-interface ItemComponentProps {
-  key: string;
-  label: string;
-  elementValue: any;
-  elementKey: string;
-  helpText?: string;
-  fieldLabel?: string;
-  fieldType?: string;
-  allowMultipleValues?: any;
-  minimumValues?: any;
-  placeholder?: any;
-  elementType: string;
-  elementValues?: string[];
-}
-const ItemComponent = ({
-  key,
-  label,
-  helpText,
-  fieldLabel,
-  fieldType,
-  allowMultipleValues,
-  minimumValues,
-  placeholder,
-  elementValue,
-  elementKey,
-  elementType,
-  elementValues
-}: ItemComponentProps) => {
-  console.log({
-    // key,
-    // label,
-    // helpText,
-    // fieldLabel,
-    // fieldType,
-    // allowMultipleValues,
-    // minimumValues,
-    // placeholder,
-    elementValue,
-    elementKey,
-    elementType
-  });
-  return (
-    <div key={elementKey} data-key={elementKey}>
-      {getComponentByElementType({
-        key,
-        label,
-        helpText,
-        fieldLabel,
-        fieldType,
-        allowMultipleValues,
-        minimumValues,
-        placeholder,
-        elementValue,
-        elementKey,
-        elementType,
-        elementValues
-      })}
-    </div>
-  );
-  {
-    /* {elementKey}
-      {placeholder?.show === true && (
-        <Input
-          label={label}
-          text={placeholder.text}
-          value={elementValue}
-        ></Input>
-      )} */
-  }
+  return preparedElement;
 };
 
-const getComponentByElementType = ({
-  key,
+export const getComponentByElementType = ({
   label,
-  helpText,
-  fieldLabel,
-  fieldType,
-  allowMultipleValues,
   minimumValues,
   placeholder,
   elementValue,
@@ -134,29 +69,35 @@ const getComponentByElementType = ({
     case ElementType.Text:
       return (
         <Input
-          label={label}
-          text={placeholder.text}
-          value={elementValue}
+          label={`${label}-${elementKey}`}
+          text={placeholder!.text}
+          value={elementValue as string}
         ></Input>
       );
-      break;
+
     case ElementType.FormattedText:
-      return (
+      const shouldDisplayComponent = !R.isNil(minimumValues)
+        ? elementValues && elementValues.length >= minimumValues
+        : true;
+      return shouldDisplayComponent ? (
         <FormattedTextComponent
           label={label}
-          text={placeholder.text}
-          values={elementValues}
+          text={placeholder!.text}
+          values={elementValues!}
         ></FormattedTextComponent>
-      );
-      break;
+      ) : null;
+
     case ElementType.DateTime:
-      return <DateComponent label={label} date={elementValue}></DateComponent>;
-      break;
+      return (
+        <DateComponent
+          label={label}
+          date={elementValue as string}
+        ></DateComponent>
+      );
+
     case ElementType.Group:
-      console.log(elementValue, elementValues);
-      return <Image label={label} value={elementValue}></Image>;
-      break;
+      return <Image label={label} value={elementValue as ImageValue}></Image>;
     default:
-      return <div>dups</div>;
+      return null;
   }
 };

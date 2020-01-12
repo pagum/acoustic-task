@@ -1,7 +1,14 @@
 import React from "react";
 import { apiUrl } from "../App";
+import { ComponentWrapper } from "./ItemComponents.style";
+import { ImageValue } from "../content.type";
 
-const Image = (imageProps: any) => {
+interface ImageProps {
+  label: string;
+  value: ImageValue;
+}
+
+const Image = (imageProps: ImageProps) => {
   const {
     label,
     value: {
@@ -12,13 +19,15 @@ const Image = (imageProps: any) => {
       leadImageCredit: { value: leadImageCreditvalue }
     }
   } = imageProps;
+
   const alternativeText =
     altText.length > 0 ? altText.length : leadImageCaptionValue;
+
   return (
-    <div>
+    <ComponentWrapper>
       {label}
       <img src={apiUrl + resourceUri} alt={alternativeText} />
-    </div>
+    </ComponentWrapper>
   );
 };
 export default Image;
