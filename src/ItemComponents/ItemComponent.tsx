@@ -1,7 +1,8 @@
 import React from "react";
 
-import { ImageValue } from "../content.type";
-import { getComponentByElementType } from "../contentItem.helpers";
+import { ImageValue } from "../Content/content.type";
+import Typography from "@material-ui/core/Typography";
+import { getComponentByElementType } from "../Content/contentItem.helpers";
 
 export interface ItemComponentProps {
   label: string;
@@ -29,7 +30,7 @@ const ItemComponent = ({
   elementType,
   elementValues
 }: ItemComponentProps) => (
-  <div key={elementKey} data-key={elementKey}>
+  <div key={elementKey}>
     {getComponentByElementType({
       label,
       minimumValues,

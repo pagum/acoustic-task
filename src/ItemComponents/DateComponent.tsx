@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import Typography from "@material-ui/core/Typography";
 
 import { ComponentWrapper } from "./ItemComponents.style";
 
@@ -10,9 +11,10 @@ interface DateProps {
 
 const DateComponent = ({ label, date }: DateProps) => {
   const formattedDate = moment(date).format("MM-DD-YYYY  HH:mm");
+
   return (
     <ComponentWrapper>
-      {label}
+      <Typography variant="h6">{label}</Typography>
       {formattedDate}
     </ComponentWrapper>
   );

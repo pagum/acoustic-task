@@ -1,5 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+
 import { ComponentWrapper } from "./ItemComponents.style";
 
 interface InputProps {
@@ -10,7 +12,7 @@ interface InputProps {
 
 const Input = ({ label, text, value }: InputProps) => (
   <ComponentWrapper>
-    {label}
+    <Typography variant="h6">{label}</Typography>
     <TextField
       type="text"
       placeholder={text}

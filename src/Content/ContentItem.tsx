@@ -9,16 +9,14 @@ interface ContentItemProps {
 }
 
 const ContentItem = ({ item }: ContentItemProps) => {
-  console.log(item);
   const elementsKeys = R.keys(item.elements);
   const elementsValues = R.values(item.elements);
   const itemElements = elementsKeys.map((key, index) => ({
     key,
     ...elementsValues[index]
   }));
-  console.log(itemElements);
   const element = prepareElement({ itemElements });
-
   return <div>{element}</div>;
 };
+
 export default ContentItem;

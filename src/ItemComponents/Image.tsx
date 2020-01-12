@@ -1,7 +1,9 @@
 import React from "react";
+import Typography from "@material-ui/core/Typography";
+
 import { apiUrl } from "../App";
-import { ComponentWrapper } from "./ItemComponents.style";
-import { ImageValue } from "../content.type";
+import { ComponentWrapper, ImageContainer } from "./ItemComponents.style";
+import { ImageValue } from "../Content/content.type";
 
 interface ImageProps {
   label: string;
@@ -25,9 +27,10 @@ const Image = (imageProps: ImageProps) => {
 
   return (
     <ComponentWrapper>
-      {label}
-      <img src={apiUrl + resourceUri} alt={alternativeText} />
+      <Typography variant="h6">{label}</Typography>
+      <ImageContainer src={apiUrl + resourceUri} alt={alternativeText} />
     </ComponentWrapper>
   );
 };
+
 export default Image;

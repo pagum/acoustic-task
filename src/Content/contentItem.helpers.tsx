@@ -1,14 +1,14 @@
 import React from "react";
 import * as R from "ramda";
 
-import { articleType } from "./data";
-import Input from "./ItemComponents/Input";
-import FormattedTextComponent from "./ItemComponents/FormattedTextComponent";
-import DateComponent from "./ItemComponents/DateComponent";
-import Image from "./ItemComponents/Image";
+import { articleType } from "../data";
+import Input from "../ItemComponents/Input";
+import FormattedTextComponent from "../ItemComponents/FormattedTextComponent";
+import DateComponent from "../ItemComponents/DateComponent";
+import Image from "../ItemComponents/Image";
 import ItemComponent, {
   ItemComponentProps
-} from "./ItemComponents/ItemComponent";
+} from "../ItemComponents/ItemComponent";
 import { ImageValue } from "./content.type";
 
 interface ItemElement {
@@ -38,6 +38,7 @@ export const prepareElement = ({ itemElements }: PrepareElementInterface) => {
       const articleElement = R.find(
         R.propEq("elementType", element.elementType)
       )(articleElements);
+
       const {
         value: elementValue,
         key: elementKey,
@@ -53,6 +54,7 @@ export const prepareElement = ({ itemElements }: PrepareElementInterface) => {
         elementValues
       });
     });
+
   return preparedElement;
 };
 
@@ -97,6 +99,7 @@ export const getComponentByElementType = ({
 
     case ElementType.Group:
       return <Image label={label} value={elementValue as ImageValue}></Image>;
+
     default:
       return null;
   }

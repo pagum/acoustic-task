@@ -20,7 +20,6 @@ export interface Element {
     elementType: string;
     value?: string | ImageValue;
     values?: string[];
-
     typeRef?: { id: string }
   }
 }
